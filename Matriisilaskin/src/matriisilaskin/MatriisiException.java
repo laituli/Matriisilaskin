@@ -10,8 +10,15 @@ package matriisilaskin;
  * @author Laituli
  */
 public abstract class MatriisiException extends Exception{
+    static Exception KelvotonIndeksi;
     public MatriisiException(String string) {
         super(string);
+    }
+    public static KelvotonIndeksi kelvotonIndeksi(){
+        return new KelvotonIndeksi();
+    }
+    public static VaaraKokoinenMatriisi vaaraKokoinenMatriisi(){
+        return new VaaraKokoinenMatriisi();
     }
     public static class KelvotonIndeksi extends MatriisiException{
         public KelvotonIndeksi() {
