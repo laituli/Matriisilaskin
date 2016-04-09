@@ -118,5 +118,10 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
     protected AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         return toinen.dot(this); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public double[][] matrix() {
+        return matriisi.clone();
+    }
     
 }

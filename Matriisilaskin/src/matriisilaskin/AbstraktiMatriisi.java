@@ -13,6 +13,12 @@ import java.util.logging.Logger;
  * @author Laituli
  */
 public abstract class AbstraktiMatriisi {
+    
+    /**
+     * 
+     * @return matriisin sisältö
+     */
+    public abstract double[][] matrix();
     /**
      * 
      * @return matriisin leveys 
