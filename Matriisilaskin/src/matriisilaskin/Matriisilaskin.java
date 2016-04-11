@@ -6,11 +6,7 @@
 package matriisilaskin;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import sun.org.mozilla.javascript.internal.ScriptRuntime;
 
 /**
  *
@@ -29,129 +25,244 @@ public class Matriisilaskin {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+       
         Matriisilaskin matriisilaskin = new Matriisilaskin();
         matriisilaskin.main_();
+        
     }
 
     public void main_() {
         muuttujat = new HashMap<>();
-        avainsanat = new String[]{"=", "+", "-", "*","^T", "matrix"};
-        String input;
-        String[] apustrings;
-        String left, right;
-
-        //Scanner scanner = new Scanner(System.in);
+        String[] inputs;
+        Scanner scanner;
+        scanner = new Scanner(System.in);
+        boolean stringscanner;
+        stringscanner = false;
+        //test case
         /*
-        Scanner scanner = new Scanner("A = matrix 2 3\n"
-                + "1 2\n"
-                + "3 4\n"
-                + "5 6\n"
-                + "B = matrix 2 3\n"
-                + "7 8\n"
-                + "9 10\n"
-                + "11 12\n"
-                + "C = A + B\n"
-                + "quit\n");
-        */
-        Scanner scanner = new Scanner("A = matrix 2 3\n"
-                + "1 2\n"
-                + "3 4\n"
-                + "5 6\n"
-                + "B = matrix 2 3\n"
-                + "7 8\n"
-                + "9 10\n"
-                + "11 12\n"
-                + "C = A * B\n"
-                + "all\n"
-                + "A\n"
-                + "C\n"
-                + "quit\n");
-        while (true) {
-            input = scanner.nextLine();
-            if (input.equals("quit")) {
-                break;
+         scanner = new Scanner(
+         "A = newmatrix 2 3\n"
+         + "1 2\n"
+         + "3 4\n"
+         + "5 6\n"
+         + "B = newmatrix 2 3\n"
+         + "7 8\n"
+         + "9 10\n"
+         + "11 12\n"
+         + "C = newmatrix 3 4\n"
+         + "-1 -2 -3\n"
+         + "-4 -5 -6\n"
+         + "-7 -8 -9\n"
+         + "-10 -11 -12\n"
+         + "D = C * A\n"
+         + "E = A + B\n"
+         + "F = A ^T\n"
+         + "all\n"
+         + "A\n"
+         + "D\n"
+         + "quit\n");
+         stringscanner = true;
+         */
+        while (scanner.hasNext()) {
+            inputs = scanner.nextLine().split(" ");
+            if (stringscanner) {
+                for (int i = 0; i < inputs.length; i++) {
+                    System.out.print(inputs[i] + " ");
+                }
+                System.out.println("");
             }
-            if(!input.contains(" ")){
-                if(input.equals("all")){
-                    print_kaikki_muuttujat();
-                }else{
-                    for (String nimi : muuttujat.keySet()) {
-                        if(input.equals(nimi)){
-                            System.out.println(nimi+"=");
-                            print(muuttujat.get(nimi).matrix());
+            boolean whilecontinue = false;
+            switch (inputs.length) {
+                case 1:
+                    if (inputs[0].equals("quit")) {
+                        System.exit(0);
+                    }
+                    if (inputs[0].equals("all")) {
+                        print_kaikki_muuttujat();
+                        continue;
+                    } else {
+                        for (String nimi : muuttujat.keySet()) {
+                            if (inputs[0].equals(nimi)) {
+                                System.out.println(nimi + "=");
+                                print(muuttujat.get(nimi).matrix());
+                                whilecontinue = true;
+                                break;
+                            }
+                        }
+                        if (whilecontinue) {
+                            continue;
                         }
                     }
-                }
-                continue;
-            }
-            apustrings = input.split("=");
-            left = apustrings[0];
-            right = apustrings[1];
-            if (!muuttuja_nimi(left)) {
-                continue;
-            }
-            right = right.trim();
-            apustrings = right.split(" ");
-            if (apustrings[0].equals("matrix")) {
-                int leveys, korkeus;
-                leveys = Integer.parseInt(apustrings[1]);
-                korkeus = Integer.parseInt(apustrings[2]);
-                double[][] matrix = new double[korkeus][leveys];
-                for (int i = 0; i < korkeus; i++) {
-                    apustrings = scanner.nextLine().split(" ");
-                    for (int j = 0; j < leveys; j++) {
-                        matrix[i][j] = Double.parseDouble(apustrings[j]);
+                    System.out.println("unknown command");
+                    continue;
+                case 2:
+                    if (inputs[0].equals("release")) {
+                        for (String nimi : muuttujat.keySet()) {
+                            if (inputs[1].equals(nimi)) {
+                                muuttujat.remove(nimi);
+                                whilecontinue = true;
+                                break;
+                            }
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                        System.out.println("matrix " + inputs[1] + " not found");
+                        break;
                     }
-                }
-                AbstraktiMatriisi mat = new TavallinenMatriisi(matrix);
-                muuttujat.put(left.trim(), mat);
-            } else if (apustrings[1].equals("+")) {
-                AbstraktiMatriisi eka = muuttujat.get(apustrings[0]);
-                AbstraktiMatriisi toka = muuttujat.get(apustrings[2]);
-                try {
-                    AbstraktiMatriisi tulos = eka.addition(toka);
-                    double[][] matrix = tulos.matrix();
-                    System.out.println(left + "=");
-                    print(matrix);
-                    muuttujat.put(left.trim(), tulos);
-                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                    System.out.println("error");
-                    System.out.println("continue");
-                    System.out.println("---");
-                    continue;
-                }
-            } else if (apustrings[1].equals("-")) {
-                AbstraktiMatriisi eka = muuttujat.get(apustrings[0]);
-                AbstraktiMatriisi toka = muuttujat.get(apustrings[2]);
-                try {
-                    AbstraktiMatriisi tulos = eka.substract(toka);
-                    double[][] matrix = tulos.matrix();
-                    System.out.println(left + "=");
-                    print(matrix);
-                    muuttujat.put(left.trim(), tulos);
-                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                    System.out.println("error");
-                    System.out.println("continue");
-                    System.out.println("---");
-                    continue;
-                }
-            } else if (apustrings[1].equals("*")) {
-                AbstraktiMatriisi eka = muuttujat.get(apustrings[0]);
-                AbstraktiMatriisi toka = muuttujat.get(apustrings[2]);
-                try {
-                    AbstraktiMatriisi tulos = eka.dot(toka);
-                    double[][] matrix = tulos.matrix();
-                    System.out.println(left + "=");
-                    print(matrix);
-                    muuttujat.put(left.trim(), tulos);
-                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                    System.out.println("error");
-                    System.out.println("continue");
-                    System.out.println("---");
-                    continue;
-                }
+                    System.out.println("unknown command");
+                    break;
+                case 3:
+                    try {
+                        int i = Integer.parseInt(inputs[1]);
+                        int j = Integer.parseInt(inputs[2]);
+                        for (String nimi : muuttujat.keySet()) {
+                            if (inputs[0].equals(nimi)) {
+                                muuttujat.get(nimi).get(i, j);
+                                whilecontinue = true;
+                                break;
+                            }
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                        System.out.println("matrix " + inputs[0] + " not found");
+                        continue;
+                    } catch (Exception e) {
+                    }
+                    System.out.println("unknown command");
+                    break;
+                case 4:
+                    if (inputs[1].equals("=")) {
+                        switch (inputs[2]) {
+                            case "squarematrix":
+                                try {
+                                    String nimi = inputs[0];
+                                    int d = Integer.parseInt(inputs[3]);
+                                    System.out.println("write numbers each row");
+                                    whilecontinue = true;
+                                    try {
+                                        double[][] newmatrix = new double[d][d];
+                                        for (int i = 0; i < d; i++) {
+                                            inputs = scanner.nextLine().split(" ");
+                                            for (int j = 0; j < d; j++) {
+                                                newmatrix[i][j] = Double.parseDouble(inputs[j]);
+                                            }
+                                        }
+                                        AbstraktiMatriisi mat = new TavallinenMatriisi(newmatrix);
+                                        muuttujat.put(nimi, mat);
+                                    } catch (Exception e) {
+                                        System.out.println("wrong input");
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("unknown command");
+                                }
+                                break;
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                        if (inputs[3].equals("^T")) {
+                            for (String nimi : muuttujat.keySet()) {
+                                if (inputs[2].equals(nimi)) {
+                                    AbstraktiMatriisi matrix = muuttujat.get(nimi).transpose();
+                                    muuttujat.put(inputs[0], matrix);
+                                    whilecontinue = true;
+                                    break;
+                                }
+                            }
+                            if (whilecontinue) {
+                                continue;
+                            }
+                            System.out.println("matrix " + inputs[2] + " not found");
+                        }
+                    }
+                    System.out.println("unknown command");
+                    break;
+                case 5:
+
+                    if (inputs[1].equals("=")) {
+                        AbstraktiMatriisi first, second, matrix;
+                        whilecontinue = true;
+                        switch (inputs[3]) {
+                            case "+":
+                                try {
+                                    first = muuttujat.get(inputs[2]);
+                                    second = muuttujat.get(inputs[4]);
+                                    matrix = first.addition(second);
+                                    muuttujat.put(inputs[0], matrix);
+                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
+                                    System.out.println("väärä kokoinen matriisi");
+                                } catch (NullPointerException npe) {
+                                    System.out.println("matrix not found");
+                                }
+                                break;
+                            case "-":
+                                try {
+                                    first = muuttujat.get(inputs[2]);
+                                    second = muuttujat.get(inputs[4]);
+                                    matrix = first.substract(second);
+                                    muuttujat.put(inputs[0], matrix);
+                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
+                                    System.out.println("väärä kokoinen matriisi");
+                                } catch (NullPointerException npe) {
+                                    System.out.println("matrix not found");
+                                }
+                                break;
+                            case "*":
+                                try {
+                                    first = muuttujat.get(inputs[2]);
+                                    second = muuttujat.get(inputs[4]);
+                                    matrix = first.dot(second);
+                                    muuttujat.put(inputs[0], matrix);
+                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
+                                    System.out.println("väärä kokoinen matriisi");
+                                } catch (NullPointerException npe) {
+                                    System.out.println("matrix not found");
+                                }
+                                break;
+                            default:
+                                whilecontinue = false;
+                                break;
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                        whilecontinue = true;
+                        switch (inputs[2]) {
+                            case "newmatrix":
+                                try {
+                                    String nimi = inputs[0];
+                                    int leveys = Integer.parseInt(inputs[3]);
+                                    int korkeus = Integer.parseInt(inputs[4]);
+                                    System.out.println("write numbers each row");
+                                    try {
+                                        double[][] newmatrix = new double[korkeus][leveys];
+                                        for (int i = 0; i < korkeus; i++) {
+                                            inputs = scanner.nextLine().split(" ");
+                                            for (int j = 0; j < leveys; j++) {
+                                                newmatrix[i][j] = Double.parseDouble(inputs[j]);
+                                            }
+                                        }
+                                        AbstraktiMatriisi mat = new TavallinenMatriisi(newmatrix);
+                                        muuttujat.put(nimi, mat);
+                                    } catch (Exception e) {
+                                        System.out.println("wrong input");
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("unknown command");
+                                }
+                                break;
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                    }
+                    System.out.println("unknown command");
+                    break;
             }
-            
         }
 
     }

@@ -13,7 +13,6 @@ import java.util.logging.Logger;
  * @author Laituli
  */
 public abstract class AbstraktiMatriisi {
-    
     /**
      * 
      * @return matriisin sisältö
@@ -57,16 +56,26 @@ public abstract class AbstraktiMatriisi {
      * @return erotusmatriisi toinen - this
      * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi 
      */
-    protected abstract AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi;
+    protected final AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
+        return toinen.substract(this);
+    }
     /**
      * 
-     * @param toinen  toisen matriisin korkeus pitää olla sama kuin alkuperäisen leveys
-     * @return tulomatriisi
+     * @param toinen  toisen matriisin korkeus pitää olla sama kuin thisin leveys
+     * @return tulomatriisi this * toinen
      * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi 
      */
     public abstract AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi;
     
-    protected abstract AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi;
+    /**
+     * 
+     * @param toinen toisen matriisin leveys pitää olla sama kuin thisin korkeus
+     * @return tulomatriisi toinen * this
+     * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi 
+     */
+    protected final AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
+        return toinen.dot(this);
+    }
     
     /**
      * 
@@ -94,5 +103,5 @@ public abstract class AbstraktiMatriisi {
         return true;
     }
     
-    
+    public abstract AbstraktiMatriisi transpose();
 }

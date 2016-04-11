@@ -5,9 +5,6 @@
  */
 package matriisilaskin;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Laituli
@@ -15,16 +12,13 @@ import java.util.logging.Logger;
 public class TavallinenMatriisi extends AbstraktiMatriisi{
     
     private double[][] matriisi;
-    //AbstraktiMatriisi erikoistunutFormaatti;//myöhempien kehityksien varten
-
+    
     /**
      * 
-     * @param matriisi matriisin sisällöt
-     * @param erikoistunutFormaatti 
+     * @param matriisi matriisin sisällöt 
      */
     public TavallinenMatriisi(double[][] matriisi) {
         this.matriisi = matriisi.clone();
-        //this.erikoistunutFormaatti = null;
     }
 
     @Override
@@ -93,7 +87,7 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
                     tulo[i][j]=s;
                 }
             }
-            return new TavallinenMatriisi(tulo);
+            return height()==toinen.width()?new TavallinenNeliomatriisi(tulo):new TavallinenMatriisi(tulo);
         }
         return toinen.dot_mirrored(this);
     }
@@ -108,20 +102,20 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
         }
         return new TavallinenMatriisi(oppo);
     }
-
-    @Override
-    protected AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        return toinen.substract(this);
-    }
-
-    @Override
-    protected AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        return toinen.dot(this); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public double[][] matrix() {
         return matriisi.clone();
+    }
+
+    @Override
+    public AbstraktiMatriisi transpose() {
+        double[][] matrixt= new double[width()][height()];
+        for (int i = 0; i < height(); i++) {
+            for (int j = 0; j < width(); j++) {
+                matrixt[j][i]=matriisi[i][j];
+            }
+        }
+        return new TavallinenMatriisi(matrixt);
     }
     
 }
