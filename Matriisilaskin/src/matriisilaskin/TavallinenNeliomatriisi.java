@@ -105,57 +105,58 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
         return toinen.substract_mirrored(this);
     }
     /*
+     @Override
+     public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+     if (width() != toinen.height()) {
+     throw MatriisiException.vaaraKokoinenMatriisi();
+     }
+     if (toinen instanceof TavallinenMatriisi) {
+     TavallinenMatriisi t = (TavallinenMatriisi) toinen;
+     double[][] tulo = new double[height()][toinen.width()];
+     for (int i = 0; i < height(); i++) {
+     for (int j = 0; j < toinen.width(); j++) {
+     double s = 0;
+     for (int k = 0; k < width(); k++) {
+     try {
+     s += matriisi[i][k] * t.get(k, j);
+     } catch (MatriisiException.KelvotonIndeksi ex) {
+     Logger.getLogger(TavallinenNeliomatriisi.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     }
+     tulo[i][j] = s;
+     }
+     }
+     return new TavallinenMatriisi(tulo);
+     }
+     if (toinen instanceof TavallinenNeliomatriisi) {
+     TavallinenNeliomatriisi t = (TavallinenNeliomatriisi) toinen;
+     double[][] tulo = new double[height()][toinen.width()];
+     for (int i = 0; i < height(); i++) {
+     for (int j = 0; j < toinen.width(); j++) {
+     double s = 0;
+     for (int k = 0; k < width(); k++) {
+     s += matriisi[i][k] * t.matriisi[k][j];
+     }
+     tulo[i][j] = s;
+     }
+     }
+     return new TavallinenNeliomatriisi(tulo);
+     }
+     return toinen.dot_mirrored(this);
+     }
+     */
+
     @Override
     public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         if (width() != toinen.height()) {
             throw MatriisiException.vaaraKokoinenMatriisi();
         }
         if (toinen instanceof TavallinenMatriisi) {
-            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
-            double[][] tulo = new double[height()][toinen.width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < toinen.width(); j++) {
-                    double s = 0;
-                    for (int k = 0; k < width(); k++) {
-                        try {
-                            s += matriisi[i][k] * t.get(k, j);
-                        } catch (MatriisiException.KelvotonIndeksi ex) {
-                            Logger.getLogger(TavallinenNeliomatriisi.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    tulo[i][j] = s;
-                }
-            }
+            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
             return new TavallinenMatriisi(tulo);
         }
         if (toinen instanceof TavallinenNeliomatriisi) {
-            TavallinenNeliomatriisi t = (TavallinenNeliomatriisi) toinen;
-            double[][] tulo = new double[height()][toinen.width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < toinen.width(); j++) {
-                    double s = 0;
-                    for (int k = 0; k < width(); k++) {
-                        s += matriisi[i][k] * t.matriisi[k][j];
-                    }
-                    tulo[i][j] = s;
-                }
-            }
-            return new TavallinenNeliomatriisi(tulo);
-        }
-        return toinen.dot_mirrored(this);
-    }
-    */
-    @Override
-    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi){
-            double[][] tulo = StrassenAlgoritmi.dot(matriisi,toinen.matrix());
-            return new TavallinenMatriisi(tulo);
-        }
-        if (toinen instanceof TavallinenNeliomatriisi) {
-            double[][] tulo = StrassenAlgoritmi.dot(matriisi,toinen.matrix());
+            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
             return new TavallinenNeliomatriisi(tulo);
         }
         return toinen.dot_mirrored(this);
@@ -190,7 +191,30 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
 
     @Override
     public double determinant() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return bruteforce_recursive_determinant(matriisi);
+    }
+
+    //bruteforce rekursiivinen algorithm
+    private static double bruteforce_recursive_determinant(double[][] mat) {
+        if (mat.length == 1) {
+            return mat[0][0];
+        }
+        double det = 0;
+        for (int i = 0; i < mat.length; i++) {
+            double[][] m = new double[mat.length - 1][mat.length - 1];
+            for (int j = 1; j < mat.length; j++) {
+                int k = 0;
+                for (int l = 0; l < mat.length; l++) {
+                    if (i == l) {
+                        continue;
+                    }
+                    m[j - 1][k] = mat[j][l];
+                    k++;
+                }
+            }
+            det += (i%2==0?1:-1)* mat[0][i] * bruteforce_recursive_determinant(m);
+        }
+        return det;
     }
 
 }

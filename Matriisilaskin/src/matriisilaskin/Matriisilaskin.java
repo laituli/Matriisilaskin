@@ -38,30 +38,40 @@ public class Matriisilaskin {
         boolean stringscanner;
         stringscanner = false;
         //test case
-        
-         scanner = new Scanner(
-         "A = newmatrix 2 3\n"
-         + "1 2\n"
-         + "3 4\n"
-         + "5 6\n"
-         + "B = newmatrix 2 3\n"
-         + "7 8\n"
-         + "9 10\n"
-         + "11 12\n"
-         + "C = newmatrix 3 4\n"
-         + "-1 -2 -3\n"
-         + "-4 -5 -6\n"
-         + "-7 -8 -9\n"
-         + "-10 -11 -12\n"
-         + "D = C * A\n"
-         + "E = A + B\n"
-         + "F = A ^T\n"
-         + "all\n"
-         + "A\n"
-         + "D\n"
-         + "quit\n");
-         stringscanner = true;
-         
+        /*
+        scanner = new Scanner(
+                "A = newmatrix 2 3\n"
+                + "1 2\n"
+                + "3 4\n"
+                + "5 6\n"
+                + "B = newmatrix 2 3\n"
+                + "7 8\n"
+                + "9 10\n"
+                + "11 12\n"
+                + "X = squarematrix 3\n"
+                + "7 8 9\n"
+                + "9 10 11\n"
+                + "11 12 13\n"
+                + "Y = squarematrix 3\n"
+                + "7 8 9\n"
+                + "9 10 11\n"
+                + "20 12 13\n"
+                + "C = newmatrix 3 4\n"
+                + "-1 -2 -3\n"
+                + "-4 -5 -6\n"
+                + "-7 -8 -9\n"
+                + "-10 -11 -12\n"
+                + "D = C * A\n"
+                + "E = A + B\n"
+                + "F = A ^T\n"
+                + "all\n"
+                + "X\n"
+                + "det X\n"
+                + "A\n"
+                + "D\n"
+                + "quit\n");
+        stringscanner = true;
+        */
         while (scanner.hasNext()) {
             inputs = scanner.nextLine().split(" ");
             if (stringscanner) {
@@ -100,6 +110,25 @@ public class Matriisilaskin {
                             if (inputs[1].equals(nimi)) {
                                 muuttujat.remove(nimi);
                                 whilecontinue = true;
+                                break;
+                            }
+                        }
+                        if (whilecontinue) {
+                            continue;
+                        }
+                        System.out.println("matrix " + inputs[1] + " not found");
+                        break;
+                    }
+                    if (inputs[0].equals("det")) {
+                        for (String nimi : muuttujat.keySet()) {
+                            if (inputs[1].equals(nimi)) {
+                                AbstraktiMatriisi m = muuttujat.get(nimi);
+                                if (m instanceof Neliomatriisi) {
+                                    System.out.println(((Neliomatriisi) m).determinant());
+                                    whilecontinue = true;
+                                    break;
+                                }
+                                System.out.println("matrix " + inputs[1] + "is not a square matrix");
                                 break;
                             }
                         }
@@ -148,7 +177,7 @@ public class Matriisilaskin {
                                                 newmatrix[i][j] = Double.parseDouble(inputs[j]);
                                             }
                                         }
-                                        AbstraktiMatriisi mat = new TavallinenMatriisi(newmatrix);
+                                        AbstraktiMatriisi mat = new TavallinenNeliomatriisi(newmatrix);
                                         muuttujat.put(nimi, mat);
                                     } catch (Exception e) {
                                         System.out.println("wrong input");
@@ -284,5 +313,23 @@ public class Matriisilaskin {
             System.out.println(nimi + "=");
             print(muuttujat.get(nimi).matrix());
         }
+    }
+
+    public double[][] read_matrix(Scanner scanner, int leveys, int korkeus) {
+        System.out.println("write numbers each row");
+        try {
+            double[][] newmatrix = new double[korkeus][leveys];
+            for (int i = 0; i < korkeus; i++) {
+                String[] numbers = scanner.nextLine().split(" ");
+                for (int j = 0; j < leveys; j++) {
+                    newmatrix[i][j] = Double.parseDouble(numbers[j]);
+                }
+            }
+            return newmatrix;
+        } catch (Exception e) {
+            System.out.println("wrong input");
+            return null;
+        }
+
     }
 }
