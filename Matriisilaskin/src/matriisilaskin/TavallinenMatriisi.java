@@ -9,13 +9,13 @@ package matriisilaskin;
  *
  * @author Laituli
  */
-public class TavallinenMatriisi extends AbstraktiMatriisi{
-    
+public class TavallinenMatriisi extends AbstraktiMatriisi {
+
     private double[][] matriisi;
-    
+
     /**
-     * 
-     * @param matriisi matriisin sisällöt 
+     *
+     * @param matriisi matriisin sisällöt
      */
     public TavallinenMatriisi(double[][] matriisi) {
         this.matriisi = matriisi.clone();
@@ -32,7 +32,7 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
     }
 
     @Override
-    public double get(int i, int j) throws MatriisiException.KelvotonIndeksi{
+    public double get(int i, int j) throws MatriisiException.KelvotonIndeksi {
         try {
             return matriisi[i][j];
         } catch (IndexOutOfBoundsException e) {
@@ -42,66 +42,83 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
 
     @Override
     public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if(width()!=toinen.width() && height()!=toinen.height())throw MatriisiException.vaaraKokoinenMatriisi();
-        if(toinen instanceof TavallinenMatriisi){
-            TavallinenMatriisi t=(TavallinenMatriisi)toinen;
+        if (width() != toinen.width() && height() != toinen.height()) {
+            throw MatriisiException.vaaraKokoinenMatriisi();
+        }
+        if (toinen instanceof TavallinenMatriisi) {
+            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
             double[][] sum = new double[height()][width()];
             for (int i = 0; i < height(); i++) {
                 for (int j = 0; j < width(); j++) {
-                        sum[i][j]=matriisi[i][j]+t.matriisi[i][j];
+                    sum[i][j] = matriisi[i][j] + t.matriisi[i][j];
                 }
-            }    
+            }
             return new TavallinenMatriisi(sum);
-        }        
+        }
         return toinen.addition(this);
     }
 
     @Override
     public AbstraktiMatriisi substract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if(width()!=toinen.width() && height()!=toinen.height())throw MatriisiException.vaaraKokoinenMatriisi();
-        if(toinen instanceof TavallinenMatriisi){
-            TavallinenMatriisi t=(TavallinenMatriisi)toinen;
+        if (width() != toinen.width() && height() != toinen.height()) {
+            throw MatriisiException.vaaraKokoinenMatriisi();
+        }
+        if (toinen instanceof TavallinenMatriisi) {
+            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
             double[][] dif = new double[height()][width()];
             for (int i = 0; i < height(); i++) {
                 for (int j = 0; j < width(); j++) {
-                        dif[i][j]=matriisi[i][j]-t.matriisi[i][j];
-                }
-            }    
-            return new TavallinenMatriisi(dif);
-        }        
-        return toinen.substract_mirrored(this);
-    }
-
-    @Override
-    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if(width()!=toinen.height())throw MatriisiException.vaaraKokoinenMatriisi();
-        if(toinen instanceof TavallinenMatriisi){
-            TavallinenMatriisi t=(TavallinenMatriisi) toinen;
-            double[][] tulo=new double[height()][toinen.width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < toinen.width(); j++) {
-                    double s = 0;
-                    for (int k = 0; k < width(); k++) {
-                        s+=matriisi[i][k]*t.matriisi[k][j];
-                    }
-                    tulo[i][j]=s;
+                    dif[i][j] = matriisi[i][j] - t.matriisi[i][j];
                 }
             }
-            return height()==toinen.width()?new TavallinenNeliomatriisi(tulo):new TavallinenMatriisi(tulo);
+            return new TavallinenMatriisi(dif);
+        }
+        return toinen.substract_mirrored(this);
+    }
+    /*
+     @Override
+     public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+     if(width()!=toinen.height())throw MatriisiException.vaaraKokoinenMatriisi();
+     if(toinen instanceof TavallinenMatriisi){
+     TavallinenMatriisi t=(TavallinenMatriisi) toinen;
+     double[][] tulo=new double[height()][toinen.width()];
+     for (int i = 0; i < height(); i++) {
+     for (int j = 0; j < toinen.width(); j++) {
+     double s = 0;
+     for (int k = 0; k < width(); k++) {
+     s+=matriisi[i][k]*t.matriisi[k][j];
+     }
+     tulo[i][j]=s;
+     }
+     }
+     return height()==toinen.width()?new TavallinenNeliomatriisi(tulo):new TavallinenMatriisi(tulo);
+     }
+     return toinen.dot_mirrored(this);
+     }
+     */
+
+    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+        if (width() != toinen.height()) {
+            throw MatriisiException.vaaraKokoinenMatriisi();
+        }
+        if (toinen instanceof TavallinenMatriisi) {
+            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
+            return height() == toinen.width() ? new TavallinenNeliomatriisi(tulo) : new TavallinenMatriisi(tulo);
         }
         return toinen.dot_mirrored(this);
     }
 
     @Override
     public AbstraktiMatriisi opposite() {
-        double[][] oppo=new double[height()][width()];
+        double[][] oppo = new double[height()][width()];
         for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                oppo[i][j] = - matriisi[i][j];
+            for (int j = 0; j < width(); j++) {
+                oppo[i][j] = -matriisi[i][j];
             }
         }
         return new TavallinenMatriisi(oppo);
     }
+
     @Override
     public double[][] matrix() {
         return matriisi.clone();
@@ -109,13 +126,12 @@ public class TavallinenMatriisi extends AbstraktiMatriisi{
 
     @Override
     public AbstraktiMatriisi transpose() {
-        double[][] matrixt= new double[width()][height()];
+        double[][] matrixt = new double[width()][height()];
         for (int i = 0; i < height(); i++) {
             for (int j = 0; j < width(); j++) {
-                matrixt[j][i]=matriisi[i][j];
+                matrixt[j][i] = matriisi[i][j];
             }
         }
         return new TavallinenMatriisi(matrixt);
     }
-    
 }

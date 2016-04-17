@@ -25,10 +25,9 @@ public class Matriisilaskin {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       
         Matriisilaskin matriisilaskin = new Matriisilaskin();
         matriisilaskin.main_();
-        
+
     }
 
     public void main_() {
@@ -39,7 +38,7 @@ public class Matriisilaskin {
         boolean stringscanner;
         stringscanner = false;
         //test case
-        /*
+        
          scanner = new Scanner(
          "A = newmatrix 2 3\n"
          + "1 2\n"
@@ -62,7 +61,7 @@ public class Matriisilaskin {
          + "D\n"
          + "quit\n");
          stringscanner = true;
-         */
+         
         while (scanner.hasNext()) {
             inputs = scanner.nextLine().split(" ");
             if (stringscanner) {
