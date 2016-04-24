@@ -56,7 +56,7 @@ public abstract class AbstraktiMatriisi {
      * @return erotusmatriisi toinen - this
      * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi 
      */
-    protected final AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
+    protected AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
         return toinen.substract(this);
     }
     /**
@@ -73,7 +73,7 @@ public abstract class AbstraktiMatriisi {
      * @return tulomatriisi toinen * this
      * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi 
      */
-    protected final AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
+    protected AbstraktiMatriisi dot_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi{
         return toinen.dot(this);
     }
     
