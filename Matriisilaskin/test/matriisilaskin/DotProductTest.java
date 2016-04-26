@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Laituli
  */
-public class AdditionTest {
+public class DotProductTest {
 
-    public AdditionTest() {
+    public DotProductTest() {
     }
 
     @BeforeClass
@@ -28,6 +28,7 @@ public class AdditionTest {
     @AfterClass
     public static void tearDownClass() {
     }
+
     private AbstraktiMatriisi[] mat33;
     private AbstraktiMatriisi[] mat34;
     private AbstraktiMatriisi[] mat44;
@@ -93,15 +94,13 @@ public class AdditionTest {
     public void tearDown() {
     }
 
-    
     /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size (3*3). 
-     * Print pair indeces when they failed the test.
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (3*3). Print pair indeces when they pass the test.
      */
     @Test
-    public void testAddition33() throws Exception {
-        System.out.println("addition33");
+    public void testDot33() throws Exception {
+        System.out.println("dot33");
         for (int i = 0; i < mat33.length; i++) {
             for (int j = 0; j < mat33.length; j++) {
                 double[][] exp = new double[3][3];
@@ -109,37 +108,13 @@ public class AdditionTest {
                 double[][] b = mat33[j].matrix();
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 3; l++) {
-                        exp[k][l] = a[k][l] + b[k][l];
+                        exp[k][l] = 0;
+                        for (int m = 0; m < 3; m++) {
+                            exp[k][l] += a[k][m] * b[m][l];
+                        }
                     }
                 }
-                double[][] result = mat33[i].addition(mat33[j]).matrix();
-                for (int k = 0; k < 3; k++) {
-                    assertArrayEquals(exp[k], result[k], 0.001);
-                }
-                System.out.println(i + j + " pass");
-            }
-        }
-    }
-
-    /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size 3*4. 
-     * Print pair indeces when they pass the test
-     */
-    @Test
-    public void testAddition34() throws Exception {
-        System.out.println("addition34");
-        for (int i = 0; i < mat34.length; i++) {
-            for (int j = 0; j < mat34.length; j++) {
-                double[][] result = mat34[i].addition(mat34[j]).matrix();
-                double[][] exp = new double[3][4];
-                double[][] a = mat34[i].matrix();
-                double[][] b = mat34[j].matrix();
-                for (int k = 0; k < 3; k++) {
-                    for (int l = 0; l < 4; l++) {
-                        exp[k][l] = a[k][l] + b[k][l];
-                    }
-                }
+                double[][] result = mat33[i].dot(mat33[j]).matrix();
                 for (int k = 0; k < 3; k++) {
                     assertArrayEquals(exp[k], result[k], 0.001);
                 }
@@ -149,24 +124,26 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size 4*4. 
-     * Print pair indeces when they pass the test
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (4*4). Print pair indeces when they pass the test.
      */
     @Test
-    public void testAddition44() throws Exception {
-        System.out.println("addition44");
+    public void testDot44() throws Exception {
+        System.out.println("dot44");
         for (int i = 0; i < mat44.length; i++) {
             for (int j = 0; j < mat44.length; j++) {
-                double[][] result = mat44[i].addition(mat44[j]).matrix();
                 double[][] exp = new double[4][4];
                 double[][] a = mat44[i].matrix();
                 double[][] b = mat44[j].matrix();
                 for (int k = 0; k < 4; k++) {
                     for (int l = 0; l < 4; l++) {
-                        exp[k][l] = a[k][l] + b[k][l];
+                        exp[k][l] = 0;
+                        for (int m = 0; m < 4; m++) {
+                            exp[k][l] += a[k][m] * b[m][l];
+                        }
                     }
                 }
+                double[][] result = mat44[i].dot(mat44[j]).matrix();
                 for (int k = 0; k < 4; k++) {
                     assertArrayEquals(exp[k], result[k], 0.001);
                 }
@@ -176,24 +153,17 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size (3*3)*(3*4) and (3*4)*(3*3). 
-     * Print pair indeces when they failed the test.
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (3*4). Print pair indeces when they failed the test.
      */
     @Test
-    public void testAddition3334() throws Exception {
-        System.out.println("addition3334");
-        for (int i = 0; i < mat33.length; i++) {
+    public void testDot34() throws Exception {
+        System.out.println("dot34");
+        for (int i = 0; i < mat34.length; i++) {
             for (int j = 0; j < mat34.length; j++) {
                 try {
-                    mat33[i].addition(mat34[j]);
-                    System.out.println("3334[" + i + "]+[" + j + "] failed");
-                    fail("expected exception");
-                } catch (MatriisiException.VaaraKokoinenMatriisi e) {
-                }
-                try {
-                    mat34[j].addition(mat33[i]);
-                    System.out.println("3334[" + i + "]+[" + j + "] mirrored failed");
+                    mat34[i].dot(mat34[j]);
+                    System.out.println(i + " " + j + " failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
                 }
@@ -202,24 +172,24 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size (3*3)*(4*4) and (4*4)*(3*3). 
-     * Print pair indeces when they failed the test.
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (3*3)*(4*4) and (4*4)*(3*3). Print pair indeces when they fail the
+     * test.
      */
     @Test
-    public void testAddition3344() throws Exception {
-        System.out.println("addition3344");
+    public void testDot3344() throws Exception {
+        System.out.println("dot3344");
         for (int i = 0; i < mat33.length; i++) {
             for (int j = 0; j < mat44.length; j++) {
                 try {
-                    mat33[i].addition(mat44[j]);
+                    mat33[i].dot(mat44[j]);
+                    System.out.println(i + " " + j + " failed");
                     fail("expected exception");
-                    System.out.println("3344[" + i + "]+[" + j + "] failed");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
                 }
                 try {
-                    mat44[j].addition(mat33[i]);
-                    System.out.println("3334[" + i + "]+[" + j + "] mirrored failed");
+                    mat44[j].dot(mat33[i]);
+                    System.out.println(i + " " + j + " mirrored failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
                 }
@@ -228,24 +198,72 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class AbstraktiMatriisi. 
-     * All pair of matrices of size (3*4)*(4*4) and (4*4)*(3*4). 
-     * Print pair indeces when they failed the test.
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (3*3)*(3*4) and (3*4)*(3*3). Print pair indeces when a) (3*3)*(3*4)
+     * pass the test and b) when (3*4)*(3*3) fail the test.
      */
     @Test
-    public void testAddition3444() throws Exception {
-        System.out.println("addition3444");
-        for (int i = 0; i < mat34.length; i++) {
-            for (int j = 0; j < mat44.length; j++) {
+    public void testDot3334() throws Exception {
+        System.out.println("dot3334");
+        for (int i = 0; i < mat33.length; i++) {
+            for (int j = 0; j < mat34.length; j++) {
+                double[][] exp = new double[3][4];
+                double[][] a = mat33[i].matrix();
+                double[][] b = mat34[j].matrix();
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 4; l++) {
+                        exp[k][l] = 0;
+                        for (int m = 0; m < 3; m++) {
+                            exp[k][l] += a[k][m] * b[m][l];
+                        }
+                    }
+                }
+                double[][] result = mat33[i].dot(mat34[j]).matrix();
+                for (int k = 0; k < 3; k++) {
+                    assertArrayEquals(exp[k], result[k], 0.001);
+                }
+                System.out.println(i + " " + j + " pass");
+
                 try {
-                    mat34[i].addition(mat44[j]);
-                    System.out.println("3444[" + i + "]+[" + j + "] failed");
+                    mat34[j].dot(mat33[i]);
+                    System.out.println(i + " " + j + " mirrored failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
                 }
+            }
+        }
+    }
+
+    /**
+     * Test of dot method, of class AbstraktiMatriisi. All pair of matrices of
+     * size (3*4)*(4*4) and (4*4)*(3*4). Print pair indeces when a) (3*4)*(4*4)
+     * pass the test and b) when (4*4)*(3*4) fail the test.
+     */
+    @Test
+    public void testDot3444() throws Exception {
+        System.out.println("dot3444");
+        for (int i = 0; i < mat34.length; i++) {
+            for (int j = 0; j < mat44.length; j++) {
+                double[][] exp = new double[3][4];
+                double[][] a = mat34[i].matrix();
+                double[][] b = mat44[j].matrix();
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 4; l++) {
+                        exp[k][l] = 0;
+                        for (int m = 0; m < 4; m++) {
+                            exp[k][l] += a[k][m] * b[m][l];
+                        }
+                    }
+                }
+                double[][] result = mat34[i].dot(mat44[j]).matrix();
+                for (int k = 0; k < 3; k++) {
+                    assertArrayEquals(exp[k], result[k], 0.001);
+                }
+                System.out.println(i + " " + j + " pass");
+
                 try {
-                    mat44[j].addition(mat34[i]);
-                    System.out.println("3444[" + i + "]+[" + j + "] failed");
+                    mat44[j].dot(mat34[i]);
+                    System.out.println(i + " " + j + " mirrored failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
                 }
