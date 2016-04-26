@@ -32,6 +32,9 @@ public class AdditionTest {
     private AbstraktiMatriisi[] mat34;
     private AbstraktiMatriisi[] mat44;
 
+    /**
+     * Generate 3 list of matrices of size (3*3), (3*4) and (4*4) to test.
+     */
     @Before
     public void setUp() {
         mat33 = new AbstraktiMatriisi[5];
@@ -90,8 +93,11 @@ public class AdditionTest {
     public void tearDown() {
     }
 
+    
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size (3*3)*(3*4) and (3*4)*(3*3). 
+     * Print pair indeces when they failed the test.
      */
     @Test
     public void testAddition33() throws Exception {
@@ -108,7 +114,7 @@ public class AdditionTest {
                 }
                 double[][] result = mat33[i].addition(mat33[j]).matrix();
                 for (int k = 0; k < 3; k++) {
-                    assertArrayEquals(exp[k], result[k],0.001);
+                    assertArrayEquals(exp[k], result[k], 0.001);
                 }
                 System.out.println(i + j + " pass");
             }
@@ -116,7 +122,9 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size 3*4. 
+     * Print pair indeces when they pass the test
      */
     @Test
     public void testAddition34() throws Exception {
@@ -133,7 +141,7 @@ public class AdditionTest {
                     }
                 }
                 for (int k = 0; k < 3; k++) {
-                    assertArrayEquals(exp[k], result[k],0.001);
+                    assertArrayEquals(exp[k], result[k], 0.001);
                 }
                 System.out.println(i + " " + j + " pass");
             }
@@ -141,7 +149,9 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size 4*4. 
+     * Print pair indeces when they pass the test
      */
     @Test
     public void testAddition44() throws Exception {
@@ -158,7 +168,7 @@ public class AdditionTest {
                     }
                 }
                 for (int k = 0; k < 4; k++) {
-                    assertArrayEquals(exp[k], result[k],0.001);
+                    assertArrayEquals(exp[k], result[k], 0.001);
                 }
                 System.out.println(i + " " + j + " pass");
             }
@@ -166,7 +176,9 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size (3*3)*(3*4) and (3*4)*(3*3). 
+     * Print pair indeces when they failed the test.
      */
     @Test
     public void testAddition3334() throws Exception {
@@ -190,7 +202,9 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size (3*3)*(4*4) and (4*4)*(3*3). 
+     * Print pair indeces when they failed the test.
      */
     @Test
     public void testAddition3344() throws Exception {
@@ -214,7 +228,9 @@ public class AdditionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of addition method, of class AbstraktiMatriisi. 
+     * All pair of matrices of size (3*4)*(4*4) and (4*4)*(3*4). 
+     * Print pair indeces when they failed the test.
      */
     @Test
     public void testAddition3444() throws Exception {
@@ -226,14 +242,12 @@ public class AdditionTest {
                     System.out.println("3444[" + i + "]+[" + j + "] failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
-                    continue;
                 }
                 try {
                     mat44[j].addition(mat34[i]);
                     System.out.println("3444[" + i + "]+[" + j + "] failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
-                    continue;
                 }
             }
         }

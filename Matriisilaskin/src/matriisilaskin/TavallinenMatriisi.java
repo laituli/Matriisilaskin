@@ -40,28 +40,8 @@ public class TavallinenMatriisi extends AbstraktiMatriisi {
         }
     }
 
-    /*
-     @Override
-     public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-     if(width()!=toinen.height())throw MatriisiException.vaaraKokoinenMatriisi();
-     if(toinen instanceof TavallinenMatriisi){
-     TavallinenMatriisi t=(TavallinenMatriisi) toinen;
-     double[][] tulo=new double[height()][toinen.width()];
-     for (int i = 0; i < height(); i++) {
-     for (int j = 0; j < toinen.width(); j++) {
-     double s = 0;
-     for (int k = 0; k < width(); k++) {
-     s+=matriisi[i][k]*t.matriisi[k][j];
-     }
-     tulo[i][j]=s;
-     }
-     }
-     return height()==toinen.width()?new TavallinenNeliomatriisi(tulo):new TavallinenMatriisi(tulo);
-     }
-     return toinen.dot_mirrored(this);
-     }
-     */
 
+    @Override
     public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         if (width() != toinen.height()) {
             throw MatriisiException.vaaraKokoinenMatriisi();

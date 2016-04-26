@@ -11,19 +11,38 @@ package matriisilaskin;
  */
 public class Rivivaihto extends Alkeismatriisi {
 
-    private int a, b;
+    private final int a, b;
 
-    public Rivivaihto(int d, int a, int b){
-        this.d = d;
-        this.a = a;
-        this.b = b;
+    /**
+     *
+     * @param d matriisin koko
+     * @param a ensimmäisen vaihtorivin indeksi
+     * @param b toisen vaihtorivin indeksi
+     */
+    public Rivivaihto(int d, int a, int b) {
+        super(d);
+        if (a > b) {
+            this.a = b;
+            this.b = a;
+        } else {
+            this.a = a;
+            this.b = b;
+        }
     }
 
-    public int getRowA() {
+    /**
+     *
+     * @return pienempi rivin indeksi
+     */
+    public int getRowSmallerIndex() {
         return a;
     }
 
-    public int getRowB() {
+    /**
+     *
+     * @return suurempi rivin indeksi
+     */
+    public int getRowGreaterIndex() {
         return b;
     }
 

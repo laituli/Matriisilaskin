@@ -11,18 +11,32 @@ package matriisilaskin;
  */
 public class RiviKerta extends Alkeismatriisi {
 
-    private int a, k;
-
+    private final int a, k;
+    
+    /**
+     *
+     * @param d matriisin koko
+     * @param a rivin indeksi joka kertaa kertaluvulla
+     * @param k kertaluku
+     */
     public RiviKerta(int d, int a, int k) {
-        this.d = d;
+        super(d);
         this.a = a;
         this.k = k;
     }
 
+    /**
+     *
+     * @return rivin indeksi joka kertaa kertaluvulla
+     */
     public int getRow() {
         return a;
     }
 
+    /**
+     *
+     * @return kertaluku
+     */
     public int getCoef() {
         return k;
     }

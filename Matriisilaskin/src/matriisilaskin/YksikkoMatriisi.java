@@ -10,10 +10,14 @@ package matriisilaskin;
  * @author Laituli
  */
 public class YksikkoMatriisi extends AbstraktiMatriisi implements Neliomatriisi {
-    int d;
+    private final int d;
 
-    public YksikkoMatriisi(int i) {
-        d = i;
+    /**
+     * 
+     * @param d matriisin koko
+     */
+    public YksikkoMatriisi(int d) {
+        this.d = d;
     }
 
     @Override

@@ -41,26 +41,24 @@ public class Rivivaihto_single_operation_Test {
      * Test of getRowA method, of class Rivivaihto.
      */
     @Test
-    public void testGetRowA() {
+    public void testGetRowSmallerIndex() {
         System.out.println("getRowA");
         Rivivaihto instance = new Rivivaihto(2, 1, 0);
-        int expResult = 1;
-        int result = instance.getRowA();
+        int expResult = 0;
+        int result = instance.getRowSmallerIndex();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
      * Test of getRowB method, of class Rivivaihto.
      */
     @Test
-    public void testGetRowB() {
+    public void testGetRowGreaterIndex() {
         System.out.println("getRowB");
         Rivivaihto instance = new Rivivaihto(3, 2, 1);
-        int expResult = 1;
-        int result = instance.getRowB();
+        int expResult = 2;
+        int result = instance.getRowGreaterIndex();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -78,7 +76,6 @@ public class Rivivaihto_single_operation_Test {
         };
         double[][] result = instance.matrix();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -93,7 +90,6 @@ public class Rivivaihto_single_operation_Test {
         double expResult = 1;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -108,7 +104,6 @@ public class Rivivaihto_single_operation_Test {
         double expResult = 0;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -123,7 +118,6 @@ public class Rivivaihto_single_operation_Test {
         double expResult = 0;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -138,7 +132,6 @@ public class Rivivaihto_single_operation_Test {
         double expResult = 1;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
    
@@ -170,7 +163,6 @@ public class Rivivaihto_single_operation_Test {
         AbstraktiMatriisi expResult = instance;
         AbstraktiMatriisi result = instance.transpose();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -183,7 +175,6 @@ public class Rivivaihto_single_operation_Test {
         double expResult = -1;
         double result = instance.determinant();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
 }

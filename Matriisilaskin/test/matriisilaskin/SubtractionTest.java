@@ -32,6 +32,9 @@ public class SubtractionTest {
     private AbstraktiMatriisi[] mat34;
     private AbstraktiMatriisi[] mat44;
 
+    /**
+     * Generate 3 list of matrices of size (3*3), (3*4) and (4*4) to test.
+     */
     @Before
     public void setUp() {
         mat33 = new AbstraktiMatriisi[5];
@@ -91,11 +94,12 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (3*3). Print pair indeces when they failed the test.
      */
     @Test
-    public void testSubtraction33() throws Exception {
-        System.out.println("subtraction33");
+    public void testSubtract33() throws Exception {
+        System.out.println("subtract33");
         for (int i = 0; i < mat33.length; i++) {
             for (int j = 0; j < mat33.length; j++) {
                 double[][] result = mat33[i].subtract(mat33[j]).matrix();
@@ -107,14 +111,14 @@ public class SubtractionTest {
                         exp[k][l] = a[k][l] - b[k][l];
                     }
                 }
-                if(i==0&&j==2){
+                if (i == 0 && j == 2) {
                     Matriisilaskin.print_matrix(a);
                     Matriisilaskin.print_matrix(b);
                     Matriisilaskin.print_matrix(exp);
                     Matriisilaskin.print_matrix(result);
                 }
                 for (int k = 0; k < 3; k++) {
-                    assertArrayEquals(exp[k], result[k],0.001);
+                    assertArrayEquals(exp[k], result[k], 0.001);
                 }
                 System.out.println(i + " " + j + " pass");
             }
@@ -122,11 +126,12 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (3*4). Print pair indeces when they failed the test.
      */
     @Test
-    public void testSubtraction34() throws Exception {
-        System.out.println("subtraction34");
+    public void testSubtract34() throws Exception {
+        System.out.println("subtract34");
         for (int i = 0; i < mat34.length; i++) {
             for (int j = 0; j < mat34.length; j++) {
                 double[][] result = mat34[i].subtract(mat34[j]).matrix();
@@ -139,7 +144,7 @@ public class SubtractionTest {
                     }
                 }
                 for (int k = 0; k < 3; k++) {
-                    assertArrayEquals(exp[k], result[k],0.001);
+                    assertArrayEquals(exp[k], result[k], 0.001);
                 }
                 System.out.println(i + " " + j + " pass");
             }
@@ -147,11 +152,12 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (4*4). Print pair indeces when they failed the test.
      */
     @Test
-    public void testSubtraction44() throws Exception {
-        System.out.println("subtraction44");
+    public void testSubtract44() throws Exception {
+        System.out.println("subtract44");
         for (int i = 0; i < mat44.length; i++) {
             for (int j = 0; j < mat44.length; j++) {
                 double[][] result = mat44[i].subtract(mat44[j]).matrix();
@@ -172,11 +178,13 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (3*3)*(3*4) and (3*4)*(3*3). Print pair indeces when they failed
+     * the test.
      */
     @Test
-    public void testSubtration3334() throws Exception {
-        System.out.println("subtraction3334");
+    public void testSubtract3334() throws Exception {
+        System.out.println("subtract3334");
         for (int i = 0; i < mat33.length; i++) {
             for (int j = 0; j < mat34.length; j++) {
                 try {
@@ -196,10 +204,12 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (3*3)*(4*4) and (4*4)*(3*3). Print pair indeces when they failed
+     * the test.
      */
     @Test
-    public void testsubtraction3344() throws Exception {
+    public void testsubtract3344() throws Exception {
         System.out.println("subtraction3344");
         for (int i = 0; i < mat33.length; i++) {
             for (int j = 0; j < mat44.length; j++) {
@@ -220,7 +230,9 @@ public class SubtractionTest {
     }
 
     /**
-     * Test of addition method, of class TavallinenMatriisi.
+     * Test of subtract method, of class AbstraktiMatriisi. All pair of matrices
+     * of size (3*4)*(4*4) and (4*4)*(3*4). Print pair indeces when they failed
+     * the test.
      */
     @Test
     public void testSubtract3444() throws Exception {
@@ -232,14 +244,12 @@ public class SubtractionTest {
                     System.out.println("3444[" + i + "]-[" + j + "] failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
-                    continue;
                 }
                 try {
                     mat44[j].subtract(mat34[i]);
                     System.out.println("3444[" + i + "]-[" + j + "] failed");
                     fail("expected exception");
                 } catch (MatriisiException.VaaraKokoinenMatriisi e) {
-                    continue;
                 }
             }
         }

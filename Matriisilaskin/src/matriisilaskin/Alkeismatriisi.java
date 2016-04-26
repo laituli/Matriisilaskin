@@ -10,7 +10,11 @@ package matriisilaskin;
  * @author Laituli
  */
 public abstract class Alkeismatriisi extends AbstraktiMatriisi implements Neliomatriisi{
-    int d;
+    final int d;
+
+    protected Alkeismatriisi(int d) {
+        this.d = d;
+    }
 
     @Override
     public int height() {

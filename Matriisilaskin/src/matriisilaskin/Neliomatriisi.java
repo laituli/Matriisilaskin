@@ -10,5 +10,10 @@ package matriisilaskin;
  * @author Laituli
  */
 public interface Neliomatriisi{
+
+    /**
+     *
+     * @return neliomatriisin determinantti
+     */
     public abstract double determinant();
 }

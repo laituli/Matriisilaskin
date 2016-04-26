@@ -51,7 +51,6 @@ public class YksikkoMatriisi_single_operation_Test {
         };
         double[][] result = instance.matrix();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -64,7 +63,6 @@ public class YksikkoMatriisi_single_operation_Test {
         int expResult = 3;
         int result = instance.width();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -77,7 +75,6 @@ public class YksikkoMatriisi_single_operation_Test {
         int expResult = 4;
         int result = instance.height();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -92,7 +89,6 @@ public class YksikkoMatriisi_single_operation_Test {
         double expResult = 1;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
     /**
      * Test of get method, of class YksikkoMatriisi.
@@ -106,7 +102,6 @@ public class YksikkoMatriisi_single_operation_Test {
         double expResult = 0;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
     /**
      * Test of opposite method, of class YksikkoMatriisi.
@@ -125,7 +120,6 @@ public class YksikkoMatriisi_single_operation_Test {
         });
         AbstraktiMatriisi result = instance.opposite();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -138,7 +132,6 @@ public class YksikkoMatriisi_single_operation_Test {
         AbstraktiMatriisi expResult = instance;
         AbstraktiMatriisi result = instance.transpose();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
@@ -151,7 +144,6 @@ public class YksikkoMatriisi_single_operation_Test {
         double expResult = 1;
         double result = instance.determinant();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
     }
     
 }

@@ -144,15 +144,29 @@ public abstract class AbstraktiMatriisi {
         }
         return true;
     }
-
+    
+    /**
+     *
+     * @return matriisin transpoosi
+     */
     public abstract AbstraktiMatriisi transpose();
 
+    /**
+     *
+     * @param toinen 
+     * @throws MatriisiException.VaaraKokoinenMatriisi jos koko ei ole sama
+     */
     public void check_add_sub_size(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         if (width() != toinen.width() || height() != toinen.height()) {
             throw MatriisiException.vaaraKokoinenMatriisi();
         }
     }
-
+    
+    /**
+     *
+     * @param toinen
+     * @throws MatriisiException.VaaraKokoinenMatriisi jos kertolasku ei ole määritelty
+     */
     public void check_mul_size(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         if (width() != toinen.height()) {
             throw MatriisiException.vaaraKokoinenMatriisi();

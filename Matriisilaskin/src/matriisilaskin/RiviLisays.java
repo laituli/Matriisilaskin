@@ -11,25 +11,42 @@ package matriisilaskin;
  */
 public class RiviLisays extends Alkeismatriisi {
 
-    //a+=bk
+    private final int a, b, k;
 
-    int a, b, k;
-
+    /**
+     *
+     * @param d matriisin koko
+     * @param a rivin indeksi johon lisätään
+     * @param b rivin indeksi josta lisätään
+     * @param k lisämisen kertaluku
+     */
     public RiviLisays(int d,int a, int b, int k){
-        this.d = d;
+        super(d);
         this.a = a;
         this.b = b;
         this.k = k;
     }
 
+    /**
+     *
+     * @return rivin indeksi johon lisätään
+     */
     public int getRowTo() {
         return a;
     }
 
+    /**
+     *
+     * @return rivin indeksi josta lisätään
+     */
     public int getRowFrom() {
         return b;
     }
 
+    /**
+     *
+     * @return kertaluku
+     */
     public int getCoef() {
         return k;
     }
