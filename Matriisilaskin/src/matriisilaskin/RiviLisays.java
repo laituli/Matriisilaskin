@@ -5,9 +5,6 @@
  */
 package matriisilaskin;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Laituli
@@ -18,10 +15,8 @@ public class RiviLisays extends Alkeismatriisi {
 
     int a, b, k;
 
-    public RiviLisays(int a, int b, int k) throws MatriisiException.KelvotonIndeksi {
-        if (a == b) {
-            throw MatriisiException.kelvotonIndeksi();
-        }
+    public RiviLisays(int d,int a, int b, int k){
+        this.d = d;
         this.a = a;
         this.b = b;
         this.k = k;
@@ -67,9 +62,7 @@ public class RiviLisays extends Alkeismatriisi {
 
     @Override
     public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
+        check_add_sub_size(toinen);
         double[][] mat = toinen.matrix();
         mat[a][b]+=k;
         for (int i = 0; i < d; i++) {
@@ -79,15 +72,13 @@ public class RiviLisays extends Alkeismatriisi {
     }
 
     @Override
-    public AbstraktiMatriisi substract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+    public AbstraktiMatriisi subtract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         return addition(toinen.opposite());
     }
 
     @Override
-    protected AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
+    protected AbstraktiMatriisi subtract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+        check_add_sub_size(toinen);
         double[][] mat = toinen.matrix();
         mat[a][b]-=k;
         for (int i = 0; i < d; i++) {
@@ -141,11 +132,7 @@ public class RiviLisays extends Alkeismatriisi {
 
     @Override
     public AbstraktiMatriisi transpose() {
-        try {
-            return new RiviLisays(b, a, k);
-        } catch (MatriisiException.KelvotonIndeksi ex) {
-            return null;
-        }
+        return new RiviLisays(d, b, a, k);
     }
 
     @Override

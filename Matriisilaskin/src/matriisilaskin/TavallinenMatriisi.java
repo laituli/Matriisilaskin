@@ -18,7 +18,7 @@ public class TavallinenMatriisi extends AbstraktiMatriisi {
      * @param matriisi matriisin sisällöt
      */
     public TavallinenMatriisi(double[][] matriisi) {
-        this.matriisi = matriisi.clone();
+       this.matriisi = Matriisilaskin.copy(matriisi);
     }
 
     @Override
@@ -40,41 +40,6 @@ public class TavallinenMatriisi extends AbstraktiMatriisi {
         }
     }
 
-    @Override
-    public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi) {
-            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
-            double[][] sum = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    sum[i][j] = matriisi[i][j] + t.matriisi[i][j];
-                }
-            }
-            return new TavallinenMatriisi(sum);
-        }
-        return toinen.addition(this);
-    }
-
-    @Override
-    public AbstraktiMatriisi substract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi) {
-            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
-            double[][] dif = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    dif[i][j] = matriisi[i][j] - t.matriisi[i][j];
-                }
-            }
-            return new TavallinenMatriisi(dif);
-        }
-        return toinen.substract_mirrored(this);
-    }
     /*
      @Override
      public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
@@ -121,7 +86,7 @@ public class TavallinenMatriisi extends AbstraktiMatriisi {
 
     @Override
     public double[][] matrix() {
-        return matriisi.clone();
+        return Matriisilaskin.copy(matriisi);
     }
 
     @Override

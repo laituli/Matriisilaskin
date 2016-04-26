@@ -230,7 +230,7 @@ public class Matriisilaskin {
                                 try {
                                     first = muuttujat.get(inputs[2]);
                                     second = muuttujat.get(inputs[4]);
-                                    matrix = first.substract(second);
+                                    matrix = first.subtract(second);
                                     muuttujat.put(inputs[0], matrix);
                                 } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
                                     System.out.println("väärä kokoinen matriisi");
@@ -331,5 +331,23 @@ public class Matriisilaskin {
             return null;
         }
 
+    }
+    
+    public static void print_matrix(double[][] matrix){
+        for (double[] matrix1 : matrix) {
+            for (double n : matrix1) {
+                System.out.print(n+" ");
+            }
+            System.out.println("");
+        }
+    }
+    public static double[][] copy(double[][] matrix){
+        double[][] ret = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                ret[i][j]=matrix[i][j];
+            }
+        }
+        return ret;
     }
 }

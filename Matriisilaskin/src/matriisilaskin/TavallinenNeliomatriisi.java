@@ -5,9 +5,6 @@
  */
 package matriisilaskin;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Laituli
@@ -21,7 +18,7 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
      * @param matriisi matriisin sisällöt
      */
     public TavallinenNeliomatriisi(double[][] matriisi) {
-        this.matriisi = matriisi.clone();
+        this.matriisi = Matriisilaskin.copy(matriisi);
     }
 
     @Override
@@ -45,9 +42,7 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
 
     @Override
     public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
+        check_add_sub_size(toinen);
         if (toinen instanceof TavallinenMatriisi) {
             TavallinenMatriisi t = (TavallinenMatriisi) toinen;
             double[][] sum = new double[height()][width()];
@@ -69,41 +64,11 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
                     sum[i][j] = matriisi[i][j] + n.matriisi[i][j];
                 }
             }
+            return new TavallinenNeliomatriisi(sum);
         }
         return toinen.addition(this);
     }
 
-    @Override
-    public AbstraktiMatriisi substract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi) {
-            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
-            double[][] dif = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    try {
-                        dif[i][j] = matriisi[i][j] - t.get(i, j);
-                    } catch (MatriisiException.KelvotonIndeksi ex) {
-                    }
-                }
-            }
-            return new TavallinenNeliomatriisi(dif);
-        }
-        if (toinen instanceof TavallinenNeliomatriisi) {
-            TavallinenNeliomatriisi t = (TavallinenNeliomatriisi) toinen;
-            double[][] dif = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    dif[i][j] = matriisi[i][j] - t.matriisi[i][j];
-                }
-            }
-            return new TavallinenNeliomatriisi(dif);
-        }
-
-        return toinen.substract_mirrored(this);
-    }
     /*
      @Override
      public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
@@ -175,7 +140,7 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
 
     @Override
     public double[][] matrix() {
-        return matriisi.clone();
+        return Matriisilaskin.copy(matriisi);
     }
 
     @Override

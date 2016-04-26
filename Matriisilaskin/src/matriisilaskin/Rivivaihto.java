@@ -13,10 +13,8 @@ public class Rivivaihto extends Alkeismatriisi {
 
     private int a, b;
 
-    public Rivivaihto(int a, int b) throws MatriisiException.KelvotonIndeksi {
-        if (a == b) {
-            throw MatriisiException.kelvotonIndeksi();
-        }
+    public Rivivaihto(int d, int a, int b){
+        this.d = d;
         this.a = a;
         this.b = b;
     }
@@ -34,7 +32,7 @@ public class Rivivaihto extends Alkeismatriisi {
         double[][] mat = new double[d][d];
         for (int i = 0; i < d; i++) {
             for (int j = 0; j < d; j++) {
-                mat[i][j]=0;
+                mat[i][j] = 0;
             }
         }
         boolean ia, ib, ja, jb, ij;
@@ -45,7 +43,7 @@ public class Rivivaihto extends Alkeismatriisi {
                 ja = j == a;
                 jb = j == b;
                 ij = i == j;
-                mat[i][j] = (ja && ib) || (ia && jb) || (ij && !(ia && ib)) ? 1 : 0;
+                mat[i][j] = (ja && ib) || (ia && jb) || (ij && !(ia || ib)) ? 1 : 0;
             }
         }
         return mat;
@@ -62,14 +60,12 @@ public class Rivivaihto extends Alkeismatriisi {
         ja = j == a;
         jb = j == b;
         ij = i == j;
-        return (ja && ib) || (ia && jb) || (ij && !(ia && ib)) ? 1 : 0;
+        return (ja && ib) || (ia && jb) || (ij && !(ia || ib)) ? 1 : 0;
     }
 
     @Override
     public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
+        check_add_sub_size(toinen);
         double[][] mat = toinen.matrix();
         mat[a][b]++;
         mat[b][a]++;
@@ -84,16 +80,15 @@ public class Rivivaihto extends Alkeismatriisi {
         }
         return new TavallinenNeliomatriisi(mat);
     }
+
     @Override
-    public AbstraktiMatriisi substract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+    public AbstraktiMatriisi subtract(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         return addition(toinen.opposite());
     }
 
     @Override
-    public AbstraktiMatriisi substract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.width() && height() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
+    public AbstraktiMatriisi subtract_mirrored(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+        check_add_sub_size(toinen);
         double[][] mat = toinen.matrix();
         mat[a][a]++;
         mat[b][b]++;
@@ -134,8 +129,6 @@ public class Rivivaihto extends Alkeismatriisi {
         }
         return toinen.width() == toinen.height() ? new TavallinenNeliomatriisi(mat) : new TavallinenMatriisi(mat);
     }
-    
-    
 
     @Override
     public AbstraktiMatriisi opposite() {
@@ -148,7 +141,7 @@ public class Rivivaihto extends Alkeismatriisi {
                 ja = j == a;
                 jb = j == b;
                 ij = i == j;
-                mat[i][j] = (ja && ib) || (ia && jb) || (ij && !(ia && ib)) ? 1 : 0;
+                mat[i][j] = (ja && ib) || (ia && jb) || (ij && !(ia || ib)) ? -1 : 0;
             }
         }
         return new TavallinenNeliomatriisi(mat);
