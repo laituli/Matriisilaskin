@@ -22,8 +22,8 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
     static TavallinenNeliomatriisi mat1 = new TavallinenNeliomatriisi(new double[][]{
         {1, 3, 9},
-        {27, 81, 243},
-        {729, 2187, 6561}
+        {26, 80, 240},
+        {730, 2190, 6560}
     });
     static TavallinenNeliomatriisi mat2 = new TavallinenNeliomatriisi(new double[][]{
         {1, 2, 8, 64},
@@ -49,7 +49,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of width method, of class TavallinenMatriisi.
+     * Test of width method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testWidth1() {
@@ -61,7 +61,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of height method, of class TavallinenMatriisi.
+     * Test of height method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testHeight1() {
@@ -73,7 +73,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of get method, of class TavallinenMatriisi.
+     * Test of get method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testGet1() throws Exception {
@@ -81,13 +81,13 @@ public class TavallinenNeliomatriisi_single_operation_Test {
         int i = 2;
         int j = 1;
         TavallinenNeliomatriisi instance = mat1;
-        double expResult = 2187;
+        double expResult = 2190;
         double result = instance.get(i, j);
         assertEquals(expResult, result, 0.0);
     }
 
     /**
-     * Test of opposite method, of class TavallinenMatriisi.
+     * Test of opposite method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testOpposite1() {
@@ -95,15 +95,15 @@ public class TavallinenNeliomatriisi_single_operation_Test {
         TavallinenNeliomatriisi instance = mat1;
         TavallinenNeliomatriisi expResult = new TavallinenNeliomatriisi(new double[][]{
             {-1, -3, -9},
-            {-27, -81, -243},
-            {-729, -2187, -6561}
+            {-26, -80, -240},
+            {-730, -2190, -6560}
         });
         AbstraktiMatriisi result = instance.opposite();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of matrix method, of class TavallinenMatriisi.
+     * Test of matrix method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testMatrix1() {
@@ -111,31 +111,43 @@ public class TavallinenNeliomatriisi_single_operation_Test {
         TavallinenNeliomatriisi instance = mat1;
         double[][] expResult = new double[][]{
             {1, 3, 9},
-            {27, 81, 243},
-            {729, 2187, 6561}
+            {26, 80, 240},
+            {730, 2190, 6560}
         };
         double[][] result = instance.matrix();
         assertArrayEquals(expResult, result);
     }
 
     /**
-     * Test of transpose method, of class TavallinenMatriisi.
+     * Test of transpose method, of class TavallinenNelioMatriisi..
      */
     @Test
     public void testTranspose1() {
         System.out.println("transpose");
         TavallinenNeliomatriisi instance = mat1;
         TavallinenMatriisi expResult = new TavallinenMatriisi(new double[][]{
-        {1, 27, 729},
-        {3, 81, 2187},
-        {9, 243, 6561}
+            {1, 26, 730},
+            {3, 80, 2190},
+            {9, 240, 6560}
         });
         AbstraktiMatriisi result = instance.transpose();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of width method, of class TavallinenMatriisi.
+     * Test of determinant method, of class TavallinenNelioMatriisi.
+     */
+    @Test
+    public void testDeterminant1() {
+        System.out.println("determinant");
+        TavallinenNeliomatriisi instance = mat1;
+        double expResult = -20;
+        double result = instance.determinant();
+        assertEquals(expResult, result, 0);
+    }
+
+    /**
+     * Test of width method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testWidth2() {
@@ -147,7 +159,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of height method, of class TavallinenMatriisi.
+     * Test of height method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testHeight2() {
@@ -159,7 +171,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of get method, of class TavallinenMatriisi.
+     * Test of get method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testGet2() throws Exception {
@@ -173,7 +185,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of opposite method, of class TavallinenMatriisi.
+     * Test of opposite method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testOpposite2() {
@@ -190,7 +202,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of matrix method, of class TavallinenMatriisi.
+     * Test of matrix method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testMatrix2() {
@@ -207,7 +219,7 @@ public class TavallinenNeliomatriisi_single_operation_Test {
     }
 
     /**
-     * Test of transpose method, of class TavallinenMatriisi.
+     * Test of transpose method, of class TavallinenNelioMatriisi.
      */
     @Test
     public void testTranspose2() {
@@ -216,5 +228,17 @@ public class TavallinenNeliomatriisi_single_operation_Test {
         TavallinenNeliomatriisi expResult = mat2;
         AbstraktiMatriisi result = instance.transpose();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of determinant method, of class TavallinenNelioMatriisi.
+     */
+    @Test
+    public void testDeterminant2() {
+        System.out.println("determinant");
+        TavallinenNeliomatriisi instance = mat2;
+        double expResult = 0;
+        double result = instance.determinant();
+        assertEquals(expResult, result, 0);
     }
 }
