@@ -39,20 +39,6 @@ public class TavallinenMatriisi extends AbstraktiMatriisi {
             throw MatriisiException.kelvotonIndeksi();
         }
     }
-
-
-    @Override
-    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi) {
-            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
-            return height() == toinen.width() ? new TavallinenNeliomatriisi(tulo) : new TavallinenMatriisi(tulo);
-        }
-        return toinen.dot_mirrored(this);
-    }
-
     @Override
     public AbstraktiMatriisi opposite() {
         double[][] oppo = new double[height()][width()];

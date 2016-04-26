@@ -41,51 +41,6 @@ public class TavallinenNeliomatriisi extends AbstraktiMatriisi implements Neliom
     }
 
     @Override
-    public AbstraktiMatriisi addition(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        check_add_sub_size(toinen);
-        if (toinen instanceof TavallinenMatriisi) {
-            TavallinenMatriisi t = (TavallinenMatriisi) toinen;
-            double[][] sum = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    try {
-                        sum[i][j] = matriisi[i][j] + t.get(i, j);
-                    } catch (MatriisiException.KelvotonIndeksi ex) {
-                    }
-                }
-            }
-            return new TavallinenNeliomatriisi(sum);
-        }
-        if (toinen instanceof TavallinenNeliomatriisi) {
-            TavallinenNeliomatriisi n = (TavallinenNeliomatriisi) toinen;
-            double[][] sum = new double[height()][width()];
-            for (int i = 0; i < height(); i++) {
-                for (int j = 0; j < width(); j++) {
-                    sum[i][j] = matriisi[i][j] + n.matriisi[i][j];
-                }
-            }
-            return new TavallinenNeliomatriisi(sum);
-        }
-        return toinen.addition(this);
-    }
-
-    @Override
-    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
-        if (width() != toinen.height()) {
-            throw MatriisiException.vaaraKokoinenMatriisi();
-        }
-        if (toinen instanceof TavallinenMatriisi) {
-            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
-            return new TavallinenMatriisi(tulo);
-        }
-        if (toinen instanceof TavallinenNeliomatriisi) {
-            double[][] tulo = StrassenAlgoritmi.dot(matriisi, toinen.matrix());
-            return new TavallinenNeliomatriisi(tulo);
-        }
-        return toinen.dot_mirrored(this);
-    }
-
-    @Override
     public AbstraktiMatriisi opposite() {
         double[][] oppo = new double[height()][width()];
         for (int i = 0; i < height(); i++) {

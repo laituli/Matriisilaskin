@@ -101,7 +101,14 @@ public abstract class AbstraktiMatriisi {
      * @return tulomatriisi this * toinen
      * @throws matriisilaskin.MatriisiException.VaaraKokoinenMatriisi
      */
-    public abstract AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi;
+    public AbstraktiMatriisi dot(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
+        check_mul_size(toinen);
+        if (!(toinen instanceof TavallinenMatriisi) && !(toinen instanceof TavallinenNeliomatriisi)) {
+            return toinen.dot_mirrored(this);
+        }
+        double[][] tulo = StrassenAlgoritmi.dot(matrix(), toinen.matrix());
+        return height() == toinen.width() ? new TavallinenNeliomatriisi(tulo) : new TavallinenMatriisi(tulo);
+    }
 
     /**
      *
@@ -144,7 +151,7 @@ public abstract class AbstraktiMatriisi {
         }
         return true;
     }
-    
+
     /**
      *
      * @return matriisin transpoosi
@@ -153,7 +160,7 @@ public abstract class AbstraktiMatriisi {
 
     /**
      *
-     * @param toinen 
+     * @param toinen
      * @throws MatriisiException.VaaraKokoinenMatriisi jos koko ei ole sama
      */
     public void check_add_sub_size(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
@@ -161,11 +168,12 @@ public abstract class AbstraktiMatriisi {
             throw MatriisiException.vaaraKokoinenMatriisi();
         }
     }
-    
+
     /**
      *
      * @param toinen
-     * @throws MatriisiException.VaaraKokoinenMatriisi jos kertolasku ei ole määritelty
+     * @throws MatriisiException.VaaraKokoinenMatriisi jos kertolasku ei ole
+     * määritelty
      */
     public void check_mul_size(AbstraktiMatriisi toinen) throws MatriisiException.VaaraKokoinenMatriisi {
         if (width() != toinen.height()) {
