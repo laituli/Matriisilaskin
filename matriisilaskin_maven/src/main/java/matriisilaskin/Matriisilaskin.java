@@ -35,54 +35,9 @@ public class Matriisilaskin {
         String[] inputs;
         Scanner scanner;
         scanner = new Scanner(System.in);
-        boolean stringscanner;
-        stringscanner = false;
-        //test case
-        /*
-         scanner = new Scanner(
-         "A = newmatrix 2 3\n"
-         + "1 2\n"
-         + "3 4\n"
-         + "5 6\n"
-         + "B = newmatrix 2 3\n"
-         + "7 8\n"
-         + "9 10\n"
-         + "11 12\n"
-         + "X = squarematrix 3\n"
-         + "7 8 9\n"
-         + "9 10 11\n"
-         + "11 12 13\n"
-         + "Y = squarematrix 3\n"
-         + "7 8 9\n"
-         + "9 10 11\n"
-         + "20 12 13\n"
-         + "C = newmatrix 3 4\n"
-         + "-1 -2 -3\n"
-         + "-4 -5 -6\n"
-         + "-7 -8 -9\n"
-         + "-10 -11 -12\n"
-         + "D = C * A\n"
-         + "E = A + B\n"
-         + "F = A ^T\n"
-         + "all\n"
-         + "X\n"
-         + "det X\n"
-         + "A\n"
-         + "D\n"
-         + "quit\n");
-         stringscanner = true;
-         */
         AbstraktiMatriisi found;
-        boolean whilecontinue;
-        while (scanner.hasNext()) {
-            whilecontinue = false;
+        while (true) {
             inputs = scanner.nextLine().split(" ");
-            if (stringscanner) {
-                for (int i = 0; i < inputs.length; i++) {
-                    System.out.print(inputs[i] + " ");
-                }
-                System.out.println("");
-            }
             switch (inputs.length) {
                 case 1:
                     if (inputs[0].equals("quit")) {
@@ -179,6 +134,7 @@ public class Matriisilaskin {
                             muuttujat.put(nimi, found.transpose());
                         }
                     }
+                    tulostaa_tuloste_4();
                     continue;
                 case 5:
                     if (inputs[1].equals("=")) {
@@ -298,6 +254,7 @@ public class Matriisilaskin {
                             } catch (Exception e) {
                                 tulostaa_tuloste_5();
                             }
+                            continue;
                         }
                     }
                     tulostaa_tuloste_4();
