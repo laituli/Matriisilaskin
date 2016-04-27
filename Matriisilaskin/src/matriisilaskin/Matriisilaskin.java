@@ -39,40 +39,43 @@ public class Matriisilaskin {
         stringscanner = false;
         //test case
         /*
-        scanner = new Scanner(
-                "A = newmatrix 2 3\n"
-                + "1 2\n"
-                + "3 4\n"
-                + "5 6\n"
-                + "B = newmatrix 2 3\n"
-                + "7 8\n"
-                + "9 10\n"
-                + "11 12\n"
-                + "X = squarematrix 3\n"
-                + "7 8 9\n"
-                + "9 10 11\n"
-                + "11 12 13\n"
-                + "Y = squarematrix 3\n"
-                + "7 8 9\n"
-                + "9 10 11\n"
-                + "20 12 13\n"
-                + "C = newmatrix 3 4\n"
-                + "-1 -2 -3\n"
-                + "-4 -5 -6\n"
-                + "-7 -8 -9\n"
-                + "-10 -11 -12\n"
-                + "D = C * A\n"
-                + "E = A + B\n"
-                + "F = A ^T\n"
-                + "all\n"
-                + "X\n"
-                + "det X\n"
-                + "A\n"
-                + "D\n"
-                + "quit\n");
-        stringscanner = true;
-        */
+         scanner = new Scanner(
+         "A = newmatrix 2 3\n"
+         + "1 2\n"
+         + "3 4\n"
+         + "5 6\n"
+         + "B = newmatrix 2 3\n"
+         + "7 8\n"
+         + "9 10\n"
+         + "11 12\n"
+         + "X = squarematrix 3\n"
+         + "7 8 9\n"
+         + "9 10 11\n"
+         + "11 12 13\n"
+         + "Y = squarematrix 3\n"
+         + "7 8 9\n"
+         + "9 10 11\n"
+         + "20 12 13\n"
+         + "C = newmatrix 3 4\n"
+         + "-1 -2 -3\n"
+         + "-4 -5 -6\n"
+         + "-7 -8 -9\n"
+         + "-10 -11 -12\n"
+         + "D = C * A\n"
+         + "E = A + B\n"
+         + "F = A ^T\n"
+         + "all\n"
+         + "X\n"
+         + "det X\n"
+         + "A\n"
+         + "D\n"
+         + "quit\n");
+         stringscanner = true;
+         */
+        AbstraktiMatriisi found;
+        boolean whilecontinue;
         while (scanner.hasNext()) {
+            whilecontinue = false;
             inputs = scanner.nextLine().split(" ");
             if (stringscanner) {
                 for (int i = 0; i < inputs.length; i++) {
@@ -80,7 +83,6 @@ public class Matriisilaskin {
                 }
                 System.out.println("");
             }
-            boolean whilecontinue = false;
             switch (inputs.length) {
                 case 1:
                     if (inputs[0].equals("quit")) {
@@ -89,217 +91,260 @@ public class Matriisilaskin {
                     if (inputs[0].equals("all")) {
                         print_kaikki_muuttujat();
                         continue;
-                    } else {
-                        for (String nimi : muuttujat.keySet()) {
-                            if (inputs[0].equals(nimi)) {
-                                System.out.println(nimi + "=");
-                                print(muuttujat.get(nimi).matrix());
-                                whilecontinue = true;
-                                break;
-                            }
-                        }
-                        if (whilecontinue) {
-                            continue;
-                        }
                     }
-                    System.out.println("unknown command");
+                    found = muuttujat.get(inputs[0]);
+                    if (found != null) {
+                        tulostaa_tuloste_1(inputs[0], found.matrix());
+                        continue;
+                    }
+                    tulostaa_tuloste_2(inputs[0]);
                     continue;
                 case 2:
                     if (inputs[0].equals("release")) {
-                        for (String nimi : muuttujat.keySet()) {
-                            if (inputs[1].equals(nimi)) {
-                                muuttujat.remove(nimi);
-                                whilecontinue = true;
-                                break;
-                            }
+                        if (muuttujat.remove(inputs[1]) == null) {
+                            tulostaa_tuloste_2(inputs[1]);
                         }
-                        if (whilecontinue) {
-                            continue;
-                        }
-                        System.out.println("matrix " + inputs[1] + " not found");
-                        break;
+                        continue;
                     }
                     if (inputs[0].equals("det")) {
-                        for (String nimi : muuttujat.keySet()) {
-                            if (inputs[1].equals(nimi)) {
-                                AbstraktiMatriisi m = muuttujat.get(nimi);
-                                if (m instanceof Neliomatriisi) {
-                                    System.out.println(((Neliomatriisi) m).determinant());
-                                    whilecontinue = true;
-                                    break;
-                                }
-                                System.out.println("matrix " + inputs[1] + "is not a square matrix");
-                                break;
-                            }
+                        found = muuttujat.get(inputs[1]);
+                        if (found == null) {
+                            tulostaa_tuloste_2(inputs[1]);
+                        } else if (found instanceof Neliomatriisi) {
+                            tulostaa_tuloste_9(((Neliomatriisi) found).determinant());
+                        } else {
+                            tulostaa_tuloste_3(inputs[1]);
                         }
-                        if (whilecontinue) {
-                            continue;
-                        }
-                        System.out.println("matrix " + inputs[1] + " not found");
-                        break;
+                        continue;
                     }
-                    System.out.println("unknown command");
-                    break;
+                    tulostaa_tuloste_4();
+
+                    continue;
                 case 3:
+                    found = muuttujat.get(inputs[0]);
+                    if (found == null) {
+                        tulostaa_tuloste_2(inputs[0]);
+                        continue;
+                    }
                     try {
                         int i = Integer.parseInt(inputs[1]);
                         int j = Integer.parseInt(inputs[2]);
-                        for (String nimi : muuttujat.keySet()) {
-                            if (inputs[0].equals(nimi)) {
-                                muuttujat.get(nimi).get(i, j);
-                                whilecontinue = true;
-                                break;
-                            }
-                        }
-                        if (whilecontinue) {
-                            continue;
-                        }
-                        System.out.println("matrix " + inputs[0] + " not found");
-                        continue;
+                        double num = found.get(i, j);
+                        tulostaa_tuloste_9(num);
                     } catch (Exception e) {
+                        tulostaa_tuloste_5();
                     }
-                    System.out.println("unknown command");
-                    break;
+                    continue;
                 case 4:
                     if (inputs[1].equals("=")) {
+                        String nimi = inputs[0];
                         switch (inputs[2]) {
                             case "squarematrix":
                                 try {
-                                    String nimi = inputs[0];
                                     int d = Integer.parseInt(inputs[3]);
-                                    System.out.println("write numbers each row");
-                                    whilecontinue = true;
+                                    if (d <= 0) {
+                                        tulostaa_tuloste_5();
+                                        continue;
+                                    }
                                     try {
-                                        double[][] newmatrix = new double[d][d];
-                                        for (int i = 0; i < d; i++) {
-                                            inputs = scanner.nextLine().split(" ");
-                                            for (int j = 0; j < d; j++) {
-                                                newmatrix[i][j] = Double.parseDouble(inputs[j]);
-                                            }
-                                        }
-                                        AbstraktiMatriisi mat = new TavallinenNeliomatriisi(newmatrix);
-                                        muuttujat.put(nimi, mat);
+                                        double[][] matrix = read_matrix(scanner, d, d);
+                                        muuttujat.put(nimi, new TavallinenNeliomatriisi(matrix));
                                     } catch (Exception e) {
-                                        System.out.println("wrong input");
-                                        break;
+                                        tulostaa_tuloste_7();
+                                        continue;
                                     }
                                 } catch (Exception e) {
-                                    System.out.println("unknown command");
+                                    tulostaa_tuloste_4();
                                 }
-                                break;
-                        }
-                        if (whilecontinue) {
-                            continue;
+                                continue;
+                            case "eye":
+                                try {
+                                    int d = Integer.parseInt(inputs[3]);
+                                    if (d <= 0) {
+                                        tulostaa_tuloste_5();
+                                        continue;
+                                    }
+                                    muuttujat.put(nimi, new YksikkoMatriisi(d));
+                                } catch (Exception e) {
+                                    tulostaa_tuloste_4();
+                                }
+                                continue;
                         }
                         if (inputs[3].equals("^T")) {
-                            for (String nimi : muuttujat.keySet()) {
-                                if (inputs[2].equals(nimi)) {
-                                    AbstraktiMatriisi matrix = muuttujat.get(nimi).transpose();
-                                    muuttujat.put(inputs[0], matrix);
-                                    whilecontinue = true;
-                                    break;
-                                }
-                            }
-                            if (whilecontinue) {
+                            found = muuttujat.get(inputs[2]);
+                            if (found == null) {
+                                tulostaa_tuloste_2(inputs[2]);
                                 continue;
                             }
-                            System.out.println("matrix " + inputs[2] + " not found");
+                            muuttujat.put(nimi, found.transpose());
                         }
                     }
-                    System.out.println("unknown command");
-                    break;
+                    continue;
                 case 5:
-
                     if (inputs[1].equals("=")) {
-                        AbstraktiMatriisi first, second, matrix;
-                        whilecontinue = true;
-                        switch (inputs[3]) {
-                            case "+":
-                                try {
-                                    first = muuttujat.get(inputs[2]);
-                                    second = muuttujat.get(inputs[4]);
-                                    matrix = first.addition(second);
-                                    muuttujat.put(inputs[0], matrix);
-                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                                    System.out.println("väärä kokoinen matriisi");
-                                } catch (NullPointerException npe) {
-                                    System.out.println("matrix not found");
-                                }
-                                break;
-                            case "-":
-                                try {
-                                    first = muuttujat.get(inputs[2]);
-                                    second = muuttujat.get(inputs[4]);
-                                    matrix = first.subtract(second);
-                                    muuttujat.put(inputs[0], matrix);
-                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                                    System.out.println("väärä kokoinen matriisi");
-                                } catch (NullPointerException npe) {
-                                    System.out.println("matrix not found");
-                                }
-                                break;
-                            case "*":
-                                try {
-                                    first = muuttujat.get(inputs[2]);
-                                    second = muuttujat.get(inputs[4]);
-                                    matrix = first.dot(second);
-                                    muuttujat.put(inputs[0], matrix);
-                                } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
-                                    System.out.println("väärä kokoinen matriisi");
-                                } catch (NullPointerException npe) {
-                                    System.out.println("matrix not found");
-                                }
-                                break;
-                            default:
-                                whilecontinue = false;
-                                break;
+                        String nimi = inputs[0];
+                        AbstraktiMatriisi first, second;
+                        first = muuttujat.get(inputs[2]);
+                        second = muuttujat.get(inputs[4]);
+                        try {
+                            switch (inputs[3]) {
+                                case "+":
+                                    if (first == null) {
+                                        tulostaa_tuloste_2(inputs[2]);
+                                        continue;
+                                    }
+                                    if (second == null) {
+                                        tulostaa_tuloste_2(inputs[4]);
+                                        continue;
+                                    }
+                                    muuttujat.put(nimi, first.addition(second));
+                                    continue;
+                                case "-":
+                                    if (first == null) {
+                                        tulostaa_tuloste_2(inputs[2]);
+                                        continue;
+                                    }
+                                    if (second == null) {
+                                        tulostaa_tuloste_2(inputs[4]);
+                                        continue;
+                                    }
+                                    muuttujat.put(nimi, first.subtract(second));
+                                    continue;
+                                case "*":
+                                    if (first == null) {
+                                        tulostaa_tuloste_2(inputs[2]);
+                                        continue;
+                                    }
+                                    if (second == null) {
+                                        tulostaa_tuloste_2(inputs[4]);
+                                        continue;
+                                    }
+                                    muuttujat.put(nimi, first.dot(second));
+                                    continue;
+                                default:
+                                    break;
+                            }
+                        } catch (MatriisiException.VaaraKokoinenMatriisi ex) {
+                            tulostaa_tuloste_6();
                         }
-                        if (whilecontinue) {
-                            continue;
-                        }
-                        whilecontinue = true;
                         switch (inputs[2]) {
                             case "newmatrix":
                                 try {
-                                    String nimi = inputs[0];
                                     int leveys = Integer.parseInt(inputs[3]);
                                     int korkeus = Integer.parseInt(inputs[4]);
-                                    System.out.println("write numbers each row");
+                                    if (leveys <= 0 || korkeus <= 0) {
+                                        tulostaa_tuloste_5();
+                                        continue;
+                                    }
                                     try {
-                                        double[][] newmatrix = new double[korkeus][leveys];
-                                        for (int i = 0; i < korkeus; i++) {
-                                            inputs = scanner.nextLine().split(" ");
-                                            for (int j = 0; j < leveys; j++) {
-                                                newmatrix[i][j] = Double.parseDouble(inputs[j]);
-                                            }
-                                        }
-                                        AbstraktiMatriisi mat = new TavallinenMatriisi(newmatrix);
-                                        muuttujat.put(nimi, mat);
+                                        double[][] newmatrix = read_matrix(scanner, leveys, korkeus);
+                                        muuttujat.put(nimi, new TavallinenMatriisi(newmatrix));
                                     } catch (Exception e) {
-                                        System.out.println("wrong input");
-                                        break;
+                                        tulostaa_tuloste_7();
                                     }
                                 } catch (Exception e) {
-                                    System.out.println("unknown command");
+                                    tulostaa_tuloste_4();
                                 }
+                                continue;
+                            default:
                                 break;
                         }
-                        if (whilecontinue) {
+                    }
+                    tulostaa_tuloste_4();
+                    continue;
+                case 6:
+                    if (inputs[1].equals("=")) {
+                        String name = inputs[0];
+                        try {
+                            int d = Integer.parseInt(inputs[3]);
+                            int a = Integer.parseInt(inputs[4]);
+                            if (d <= 0 || a < 0 || a >= d) {
+                                tulostaa_tuloste_5();
+                                continue;
+                            }
+                            switch (inputs[2]) {
+                                case "rowswitch":
+                                    int b = Integer.parseInt(inputs[5]);
+                                    if (b == a || b < 0 || b >= d) {
+                                        tulostaa_tuloste_5();
+                                        continue;
+                                    }
+                                    muuttujat.put(name, new Rivivaihto(d, a, b));
+                                    continue;
+                                case "rowmultiply":
+                                    double k = Double.parseDouble(inputs[5]);
+                                    muuttujat.put(name, new RiviKerta(d, a, k));
+                                    continue;
+                                default:
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            tulostaa_tuloste_4();
                             continue;
                         }
                     }
-                    System.out.println("unknown command");
-                    break;
+                    tulostaa_tuloste_4();
+                    continue;
+                case 7:
+                    if (inputs[1].equals("=")) {
+                        String name = inputs[0];
+                        if (inputs[2].equals("rowadd")) {
+                            try {
+                                int d = Integer.parseInt(inputs[3]);
+                                int a = Integer.parseInt(inputs[4]);
+                                int b = Integer.parseInt(inputs[5]);
+                                double k = Double.parseDouble(inputs[6]);
+                                muuttujat.put(name, new RiviLisays(d, a, b, k));
+                            } catch (Exception e) {
+                                tulostaa_tuloste_5();
+                            }
+                        }
+                    }
+                    tulostaa_tuloste_4();
+                    continue;
+                default:
+                    tulostaa_tuloste_4();
             }
         }
-
     }
 
     public boolean muuttuja_nimi(String string) {
         return true;
     }
 
-    public void print(double[][] matrix) {
+    public void print_kaikki_muuttujat() {
+        for (String nimi : muuttujat.keySet()) {
+            tulostaa_tuloste_1(nimi, muuttujat.get(nimi).matrix());
+        }
+    }
+
+    public double[][] read_matrix(Scanner scanner, int leveys, int korkeus) throws Exception {
+        tulostaa_tuloste_10();
+        double[][] newmatrix = new double[korkeus][leveys];
+        for (int i = 0; i < korkeus; i++) {
+            String[] numbers = scanner.nextLine().split(" ");
+            if (numbers.length != leveys) {
+                throw new Exception();
+            }
+            for (int j = 0; j < leveys; j++) {
+                newmatrix[i][j] = Double.parseDouble(numbers[j]);
+            }
+        }
+        return newmatrix;
+    }
+
+    public static double[][] copy(double[][] matrix) {
+        double[][] ret = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                ret[i][j] = matrix[i][j];
+            }
+        }
+        return ret;
+    }
+
+    public static void tulostaa_tuloste_1(String nimi, double[][] matrix) {
+        System.out.println(nimi + "=");
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 System.out.print(matrix[i][j] + "\t");
@@ -308,46 +353,40 @@ public class Matriisilaskin {
         }
     }
 
-    public void print_kaikki_muuttujat() {
-        for (String nimi : muuttujat.keySet()) {
-            System.out.println(nimi + "=");
-            print(muuttujat.get(nimi).matrix());
-        }
+    public void tulostaa_tuloste_2(String name) {
+        System.out.println("matrix " + name + " not found");
     }
 
-    public double[][] read_matrix(Scanner scanner, int leveys, int korkeus) {
-        System.out.println("write numbers each row");
-        try {
-            double[][] newmatrix = new double[korkeus][leveys];
-            for (int i = 0; i < korkeus; i++) {
-                String[] numbers = scanner.nextLine().split(" ");
-                for (int j = 0; j < leveys; j++) {
-                    newmatrix[i][j] = Double.parseDouble(numbers[j]);
-                }
-            }
-            return newmatrix;
-        } catch (Exception e) {
-            System.out.println("wrong input");
-            return null;
-        }
+    public void tulostaa_tuloste_3(String name) {
+        System.out.println("matirx " + name + " is not a square matrix");
+    }
 
+    public void tulostaa_tuloste_4() {
+        System.out.println("unknown command");
     }
-    
-    public static void print_matrix(double[][] matrix){
-        for (double[] matrix1 : matrix) {
-            for (double n : matrix1) {
-                System.out.print(n+" ");
-            }
-            System.out.println("");
-        }
+
+    public void tulostaa_tuloste_5() {
+        System.out.println("invalid number");
     }
-    public static double[][] copy(double[][] matrix){
-        double[][] ret = new double[matrix.length][matrix[0].length];
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                ret[i][j]=matrix[i][j];
-            }
-        }
-        return ret;
+
+    public void tulostaa_tuloste_6() {
+        System.out.println("matrices with wrong size");
     }
+
+    public void tulostaa_tuloste_7() {
+        System.out.println("matrix input error");
+    }
+
+    public void tulostaa_tuloste_8() {
+        System.out.println("give command:");
+    }
+
+    public void tulostaa_tuloste_9(double luku) {
+        System.out.println(luku);
+    }
+
+    public void tulostaa_tuloste_10() {
+        System.out.println("write number for each row:");
+    }
+
 }

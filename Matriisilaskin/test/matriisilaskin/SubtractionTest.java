@@ -111,12 +111,6 @@ public class SubtractionTest {
                         exp[k][l] = a[k][l] - b[k][l];
                     }
                 }
-                if (i == 0 && j == 2) {
-                    Matriisilaskin.print_matrix(a);
-                    Matriisilaskin.print_matrix(b);
-                    Matriisilaskin.print_matrix(exp);
-                    Matriisilaskin.print_matrix(result);
-                }
                 for (int k = 0; k < 3; k++) {
                     assertArrayEquals(exp[k], result[k], 0.001);
                 }

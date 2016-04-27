@@ -11,7 +11,8 @@ package matriisilaskin;
  */
 public class RiviLisays extends Alkeismatriisi {
 
-    private final int a, b, k;
+    private final int a, b;
+    private final double k;
 
     /**
      *
@@ -20,7 +21,7 @@ public class RiviLisays extends Alkeismatriisi {
      * @param b rivin indeksi josta lisätään
      * @param k lisämisen kertaluku
      */
-    public RiviLisays(int d,int a, int b, int k){
+    public RiviLisays(int d,int a, int b, double k){
         super(d);
         this.a = a;
         this.b = b;
@@ -47,7 +48,7 @@ public class RiviLisays extends Alkeismatriisi {
      *
      * @return kertaluku
      */
-    public int getCoef() {
+    public double getCoef() {
         return k;
     }
 

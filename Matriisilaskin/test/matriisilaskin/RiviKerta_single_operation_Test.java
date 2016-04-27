@@ -58,8 +58,8 @@ public class RiviKerta_single_operation_Test {
         System.out.println("getCoef");
         RiviKerta instance = new RiviKerta(2, 1, 3);
         int expResult = 3;
-        int result = instance.getCoef();
-        assertEquals(expResult, result);
+        double result = instance.getCoef();
+        assertEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -93,6 +93,7 @@ public class RiviKerta_single_operation_Test {
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
     }
+
     /**
      * Test of get method, of class RiviKerta.
      */
@@ -131,8 +132,8 @@ public class RiviKerta_single_operation_Test {
         System.out.println("opposite");
         RiviKerta instance = new RiviKerta(2, 1, 3);
         TavallinenNeliomatriisi expResult = new TavallinenNeliomatriisi(new double[][]{
-            {-1,0},
-            {0,-3}
+            {-1, 0},
+            {0, -3}
         });
         AbstraktiMatriisi result = instance.opposite();
         assertEquals(expResult, result);

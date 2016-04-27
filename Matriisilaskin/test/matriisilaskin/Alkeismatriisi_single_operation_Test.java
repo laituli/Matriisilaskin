@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Laituli
  */
-public class AlkeismatriisiTest {
+public class Alkeismatriisi_single_operation_Test {
     
-    public AlkeismatriisiTest() {
+    public Alkeismatriisi_single_operation_Test() {
     }
     
     @BeforeClass

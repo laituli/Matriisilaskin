@@ -17,22 +17,22 @@ import static org.junit.Assert.*;
  * @author Laituli
  */
 public class RiviLisays_single_operation_Test {
-    
+
     public RiviLisays_single_operation_Test() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -71,8 +71,8 @@ public class RiviLisays_single_operation_Test {
         System.out.println("getCoef");
         RiviLisays instance = new RiviLisays(2, 1, 0, -1);
         int expResult = -1;
-        int result = instance.getCoef();
-        assertEquals(expResult, result);
+        double result = instance.getCoef();
+        assertEquals(expResult, result, 0);
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -84,8 +84,8 @@ public class RiviLisays_single_operation_Test {
         System.out.println("matrix");
         RiviLisays instance = new RiviLisays(2, 1, 0, -1);
         double[][] expResult = new double[][]{
-            {1,0},
-            {-1,1}
+            {1, 0},
+            {-1, 1}
         };
         double[][] result = instance.matrix();
         assertArrayEquals(expResult, result);
@@ -106,7 +106,8 @@ public class RiviLisays_single_operation_Test {
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
     }
-/**
+
+    /**
      * Test of get method, of class RiviLisays.
      */
     @Test
@@ -120,6 +121,7 @@ public class RiviLisays_single_operation_Test {
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
     }
+
     /**
      * Test of get method, of class RiviLisays.
      */
@@ -135,7 +137,6 @@ public class RiviLisays_single_operation_Test {
         // TODO review the generated test code and remove the default call to fail.
     }
 
-
     /**
      * Test of opposite method, of class RiviLisays.
      */
@@ -144,12 +145,11 @@ public class RiviLisays_single_operation_Test {
         System.out.println("opposite");
         RiviLisays instance = new RiviLisays(5, 4, 3, 2);
         AbstraktiMatriisi expResult = new TavallinenNeliomatriisi(new double[][]{
-            {-1,0,0,0,0},
-            {0,-1,0,0,0},
-            {0,0,-1,0,0},
-            {0,0,0,-1,0},
-            {0,0,0,-2,-1},
-        });
+            {-1, 0, 0, 0, 0},
+            {0, -1, 0, 0, 0},
+            {0, 0, -1, 0, 0},
+            {0, 0, 0, -1, 0},
+            {0, 0, 0, -2, -1},});
         AbstraktiMatriisi result = instance.opposite();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
@@ -180,5 +180,5 @@ public class RiviLisays_single_operation_Test {
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
     }
-    
+
 }
